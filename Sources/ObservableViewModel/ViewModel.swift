@@ -9,9 +9,17 @@ public protocol ViewModel: AnyObject, Observable, Sendable {
     /// The one property a view reads. It stays on the main actor, because
     /// SwiftUI reads it from `body` and `body` cannot await. See docs/adr/0001.
     @MainActor var state: State { get set }
+
+    /// Reads the streams that feed the state, until the task is cancelled.
+    ///
+    /// The `observe(on:)` view modifier calls this method. The default does
+    /// nothing. Write this method in the view model to bind its streams.
+    func observe() async
 }
 
 extension ViewModel {
+
+    public func observe() async {}
 
     /// Writes one field of the state.
     ///
