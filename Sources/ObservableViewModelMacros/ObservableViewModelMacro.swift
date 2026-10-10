@@ -53,7 +53,10 @@ public struct ObservableViewModelMacro {
         }
         guard let state = declaration.property(named: "state") else {
             throw MacroError(
-                "@ObservableViewModel needs a state property. Add @MainActor var state = MyState().",
+                """
+                @ObservableViewModel needs a state property that conforms to ViewState. 
+                Add @MainActor var state = MyState().
+                """,
                 id: "missingState"
             )
         }
